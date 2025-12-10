@@ -1,6 +1,7 @@
-package org.ipn.mx.galeriaarte.Dominio;
+package org.ipn.mx.galeriaarte.Infrastructure.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
