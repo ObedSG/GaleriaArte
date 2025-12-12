@@ -30,9 +30,7 @@ public class SwaggerConfig {
         Info info = new Info()
                 .title("Galería de Arte Digital - API REST")
                 .version("1.0.0")
-                .description("API REST para la gestión de una galería de arte digital. " +
-                        "Permite gestionar autores, obras digitales, categorías, colecciones, " +
-                        "archivos digitales, envío de correos y generación de reportes en PDF.")
+                .description("API REST para la gestión de una galería de arte digital.")
                 .contact(contact)
                 .license(new License()
                         .name("Apache 2.0")
