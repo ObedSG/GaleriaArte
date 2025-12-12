@@ -1,5 +1,7 @@
 target/
 .mvn/
+mvnw
+mvnw.cmd
 *.iml
 .idea/
 .git/
@@ -7,3 +9,4 @@ target/
 *.md
 .DS_Store
 node_modules/
+*.log
