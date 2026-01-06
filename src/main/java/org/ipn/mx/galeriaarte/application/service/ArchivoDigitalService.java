@@ -28,9 +28,11 @@ public class ArchivoDigitalService implements ArchivoDigitalUseCase {
         log.info("Creando nuevo archivo digital para obra: {}", archivo.getIdObraDigital());
         archivo.validar();
 
-        // Validar que la obra digital existe
-        if (archivo.getIdObraDigital() != null && !obraDigitalRepositoryPort.existePorId(archivo.getIdObraDigital())) {
-            throw new BusinessException("La obra digital con ID " + archivo.getIdObraDigital() + " no existe");
+        // Validar que la obra digital existe (si se proporciona)
+        if (archivo.getIdObraDigital() != null) {
+            if (!obraDigitalRepositoryPort.existePorId(archivo.getIdObraDigital())) {
+                throw new BusinessException("La obra digital con ID " + archivo.getIdObraDigital() + " no existe");
+            }
         }
 
         return archivoDigitalRepositoryPort.guardar(archivo);

@@ -57,6 +57,17 @@ public class ObraDigitalService implements ObraDigitalUseCase {
     }
 
     @Override
+    public ObraDigitalDomain actualizarArchivoPrincipal(Integer idObra, Integer idArchivo) {
+        log.info("Asociando archivo principal {} a obra digital {}", idArchivo, idObra);
+
+        ObraDigitalDomain obra = obraDigitalRepositoryPort.buscarPorId(idObra)
+                .orElseThrow(() -> new EntityNotFoundException("Obra Digital", idObra));
+
+        obra.setIdArchivoPrincipal(idArchivo);
+        return obraDigitalRepositoryPort.guardar(obra);
+    }
+
+    @Override
     public void eliminar(Integer id) {
         log.info("Eliminando obra digital con ID: {}", id);
 

@@ -56,6 +56,19 @@ public class ObraDigitalController {
         return ResponseEntity.ok(ApiResponse.success(resultado, "Obra actualizada exitosamente"));
     }
 
+    @Operation(summary = "Asociar archivo principal a una obra digital")
+    @PatchMapping("/{idObra}/archivo-principal/{idArchivo}")
+    public ResponseEntity<ApiResponse<ObraDigitalDTO>> actualizarArchivoPrincipal(
+            @Parameter(description = "ID de la obra") @PathVariable Integer idObra,
+            @Parameter(description = "ID del archivo") @PathVariable Integer idArchivo) {
+        log.info("PATCH /api/obras/{}/archivo-principal/{} - Asociando archivo principal", idObra, idArchivo);
+
+        ObraDigitalDomain actualizado = obraDigitalUseCase.actualizarArchivoPrincipal(idObra, idArchivo);
+        ObraDigitalDTO resultado = obraDigitalMapper.toDTO(actualizado);
+
+        return ResponseEntity.ok(ApiResponse.success(resultado, "Archivo principal asociado exitosamente"));
+    }
+
     @Operation(summary = "Eliminar una obra digital")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> eliminar(

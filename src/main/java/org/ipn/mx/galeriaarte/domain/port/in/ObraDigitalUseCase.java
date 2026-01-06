@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface ObraDigitalUseCase {
     ObraDigitalDomain crear(ObraDigitalDomain obra);
     ObraDigitalDomain actualizar(Integer id, ObraDigitalDomain obra);
+    ObraDigitalDomain actualizarArchivoPrincipal(Integer idObra, Integer idArchivo);
     void eliminar(Integer id);
     Optional<ObraDigitalDomain> obtenerPorId(Integer id);
     List<ObraDigitalDomain> obtenerTodas();
