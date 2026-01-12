@@ -8,6 +8,7 @@ public interface ArchivoDigitalRepositoryPort {
     ArchivoDigitalDomain guardar(ArchivoDigitalDomain archivo);
     void eliminar(Integer id);
     Optional<ArchivoDigitalDomain> buscarPorId(Integer id);
+    List<ArchivoDigitalDomain> buscarTodos();
     List<ArchivoDigitalDomain> buscarPorObraDigital(Integer idObraDigital);
     List<ArchivoDigitalDomain> buscarPorFormato(String formato);
     boolean existePorId(Integer id);

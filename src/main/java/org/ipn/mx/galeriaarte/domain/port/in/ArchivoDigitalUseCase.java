@@ -9,6 +9,7 @@ public interface ArchivoDigitalUseCase {
     ArchivoDigitalDomain actualizar(Integer id, ArchivoDigitalDomain archivo);
     void eliminar(Integer id);
     Optional<ArchivoDigitalDomain> obtenerPorId(Integer id);
+    List<ArchivoDigitalDomain> obtenerTodos();
     List<ArchivoDigitalDomain> obtenerPorObraDigital(Integer idObraDigital);
     List<ArchivoDigitalDomain> obtenerPorFormato(String formato);
 }

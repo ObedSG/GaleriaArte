@@ -42,6 +42,13 @@ public class ArchivoDigitalRepositoryAdapter implements ArchivoDigitalRepository
     }
 
     @Override
+    public List<ArchivoDigitalDomain> buscarTodos() {
+        log.debug("Buscando todos los archivos digitales");
+        List<ArchivoDigital> entities = archivoDigitalJpaRepository.findAll();
+        return archivoDigitalEntityMapper.toDomainList(entities);
+    }
+
+    @Override
     public List<ArchivoDigitalDomain> buscarPorObraDigital(Integer idObraDigital) {
         log.debug("Buscando archivos de la obra digital con ID: {}", idObraDigital);
         List<ArchivoDigital> entities = archivoDigitalJpaRepository.findByIdObraDigital(idObraDigital);

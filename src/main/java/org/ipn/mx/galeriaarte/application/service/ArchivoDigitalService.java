@@ -77,6 +77,13 @@ public class ArchivoDigitalService implements ArchivoDigitalUseCase {
 
     @Override
     @Transactional(readOnly = true)
+    public List<ArchivoDigitalDomain> obtenerTodos() {
+        log.info("Obteniendo todos los archivos digitales");
+        return archivoDigitalRepositoryPort.buscarTodos();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<ArchivoDigitalDomain> obtenerPorObraDigital(Integer idObraDigital) {
         log.info("Obteniendo archivos de la obra digital con ID: {}", idObraDigital);
         return archivoDigitalRepositoryPort.buscarPorObraDigital(idObraDigital);

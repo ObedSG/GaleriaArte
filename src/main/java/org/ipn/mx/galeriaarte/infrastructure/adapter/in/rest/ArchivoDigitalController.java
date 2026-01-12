@@ -78,6 +78,18 @@ public class ArchivoDigitalController {
                         .body(ApiResponse.error("Archivo no encontrado")));
     }
 
+    @Operation(summary = "Obtener todos los archivos digitales")
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<ArchivoDigitalDTO>>> obtenerTodos() {
+        log.info("GET /api/archivos - Obteniendo todos los archivos");
+
+        List<ArchivoDigitalDomain> archivos = archivoDigitalUseCase.obtenerTodos();
+        List<ArchivoDigitalDTO> resultado = archivoDigitalMapper.toDTOList(archivos);
+
+        return ResponseEntity.ok(ApiResponse.success(resultado,
+                "Se encontraron " + resultado.size() + " archivos"));
+    }
+
     @Operation(summary = "Obtener archivos por obra digital")
     @GetMapping("/obra/{idObraDigital}")
     public ResponseEntity<ApiResponse<List<ArchivoDigitalDTO>>> obtenerPorObraDigital(
