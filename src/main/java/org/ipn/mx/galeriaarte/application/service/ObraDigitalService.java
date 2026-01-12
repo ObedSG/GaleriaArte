@@ -74,11 +74,18 @@ public class ObraDigitalService implements ObraDigitalUseCase {
     public void eliminar(Integer id) {
         log.info("Eliminando obra digital con ID: {}", id);
 
-        if (!obraDigitalRepositoryPort.existePorId(id)) {
-            throw new EntityNotFoundException("Obra Digital", id);
+        // Verificar que la obra existe
+        ObraDigitalDomain obra = obraDigitalRepositoryPort.buscarPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Obra Digital", id));
+
+        // Paso 1: Setear idArchivoPrincipal a null para romper la referencia
+        if (obra.getIdArchivoPrincipal() != null) {
+            log.info("Removiendo referencia al archivo principal de la obra");
+            obra.setIdArchivoPrincipal(null);
+            obraDigitalRepositoryPort.guardar(obra);
         }
 
-        // Primero eliminar todos los archivos digitales asociados a esta obra
+        // Paso 2: Eliminar todos los archivos digitales asociados a esta obra
         List<ArchivoDigitalDomain> archivosAsociados = archivoDigitalRepositoryPort.buscarPorObraDigital(id);
         log.info("Encontrados {} archivos digitales asociados, eliminándolos...", archivosAsociados.size());
         
@@ -87,7 +94,7 @@ public class ObraDigitalService implements ObraDigitalUseCase {
             log.debug("Archivo digital eliminado: ID {}", archivo.getIdArchivo());
         }
 
-        // Ahora sí eliminar la obra digital
+        // Paso 3: Ahora sí eliminar la obra digital
         obraDigitalRepositoryPort.eliminar(id);
         log.info("Obra digital eliminada exitosamente: ID {}", id);
     }
