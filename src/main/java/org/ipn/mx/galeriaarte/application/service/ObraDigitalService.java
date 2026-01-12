@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ipn.mx.galeriaarte.domain.exception.BusinessException;
 import org.ipn.mx.galeriaarte.domain.exception.EntityNotFoundException;
+import org.ipn.mx.galeriaarte.domain.model.ArchivoDigitalDomain;
 import org.ipn.mx.galeriaarte.domain.model.ObraDigitalDomain;
 import org.ipn.mx.galeriaarte.domain.port.in.ObraDigitalUseCase;
+import org.ipn.mx.galeriaarte.domain.port.out.ArchivoDigitalRepositoryPort;
 import org.ipn.mx.galeriaarte.domain.port.out.AutorRepositoryPort;
 import org.ipn.mx.galeriaarte.domain.port.out.ObraDigitalRepositoryPort;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class ObraDigitalService implements ObraDigitalUseCase {
 
     private final ObraDigitalRepositoryPort obraDigitalRepositoryPort;
     private final AutorRepositoryPort autorRepositoryPort;
+    private final ArchivoDigitalRepositoryPort archivoDigitalRepositoryPort;
 
     @Override
     public ObraDigitalDomain crear(ObraDigitalDomain obra) {
@@ -75,7 +78,18 @@ public class ObraDigitalService implements ObraDigitalUseCase {
             throw new EntityNotFoundException("Obra Digital", id);
         }
 
+        // Primero eliminar todos los archivos digitales asociados a esta obra
+        List<ArchivoDigitalDomain> archivosAsociados = archivoDigitalRepositoryPort.buscarPorObraDigital(id);
+        log.info("Encontrados {} archivos digitales asociados, eliminándolos...", archivosAsociados.size());
+        
+        for (ArchivoDigitalDomain archivo : archivosAsociados) {
+            archivoDigitalRepositoryPort.eliminar(archivo.getIdArchivo());
+            log.debug("Archivo digital eliminado: ID {}", archivo.getIdArchivo());
+        }
+
+        // Ahora sí eliminar la obra digital
         obraDigitalRepositoryPort.eliminar(id);
+        log.info("Obra digital eliminada exitosamente: ID {}", id);
     }
 
     @Override

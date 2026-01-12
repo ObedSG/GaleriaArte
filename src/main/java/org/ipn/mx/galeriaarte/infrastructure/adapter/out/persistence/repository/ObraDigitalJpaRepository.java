@@ -28,5 +28,7 @@ public interface ObraDigitalJpaRepository extends JpaRepository<ObraDigital, Int
     @Query("SELECT o FROM ObraDigital o JOIN o.colecciones c WHERE c.idColeccion = :idColeccion")
     List<ObraDigital> findByColeccion(@Param("idColeccion") Integer idColeccion);
 
+    List<ObraDigital> findByIdArchivoPrincipal(Integer idArchivoPrincipal);
+
     boolean existsByIdObraDigital(Integer id);
 }

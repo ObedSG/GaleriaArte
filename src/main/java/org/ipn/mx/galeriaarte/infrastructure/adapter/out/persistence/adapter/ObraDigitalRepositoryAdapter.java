@@ -71,6 +71,13 @@ public class ObraDigitalRepositoryAdapter implements ObraDigitalRepositoryPort {
     }
 
     @Override
+    public List<ObraDigitalDomain> buscarPorArchivoPrincipal(Integer idArchivoPrincipal) {
+        log.debug("Buscando obras digitales con archivo principal ID: {}", idArchivoPrincipal);
+        List<ObraDigital> entities = obraDigitalJpaRepository.findByIdArchivoPrincipal(idArchivoPrincipal);
+        return obraDigitalEntityMapper.toDomainList(entities);
+    }
+
+    @Override
     public boolean existePorId(Integer id) {
         log.debug("Verificando si existe obra digital con ID: {}", id);
         return obraDigitalJpaRepository.existsByIdObraDigital(id);

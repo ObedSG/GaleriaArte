@@ -66,6 +66,7 @@ public class ArchivoDigitalService implements ArchivoDigitalUseCase {
         }
 
         archivoDigitalRepositoryPort.eliminar(id);
+        log.info("Archivo digital eliminado exitosamente: ID {}", id);
     }
 
     @Override

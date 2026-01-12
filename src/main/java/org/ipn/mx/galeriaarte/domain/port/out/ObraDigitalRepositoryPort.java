@@ -13,5 +13,6 @@ public interface ObraDigitalRepositoryPort {
     List<ObraDigitalDomain> buscarPorTituloContiene(String titulo);
     List<ObraDigitalDomain> buscarPorAutor(Integer idAutor);
     List<ObraDigitalDomain> buscarPorRangoFechas(LocalDate fechaInicio, LocalDate fechaFin);
+    List<ObraDigitalDomain> buscarPorArchivoPrincipal(Integer idArchivoPrincipal);
     boolean existePorId(Integer id);
 }
