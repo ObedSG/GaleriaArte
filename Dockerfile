@@ -51,8 +51,8 @@ EXPOSE 8083
 HEALTHCHECK --interval=30s --timeout=3s --start-period=90s --retries=3 \
   CMD curl -f http://localhost:8080/actuator/health || exit 1
 
-# Variables de entorno por defecto
-ENV JAVA_OPTS="-Xmx512m -Xms256m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+# Variables de entorno optimizadas para Render Free Tier (512MB RAM)
+ENV JAVA_OPTS="-Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m -XX:MetaspaceSize=64m -XX:+UseContainerSupport -XX:MaxRAMPercentage=50.0 -XX:+ExitOnOutOfMemoryError"
 
 # Ejecutar la aplicación
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar app.jar"]
